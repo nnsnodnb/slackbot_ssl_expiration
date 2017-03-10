@@ -8,6 +8,21 @@ import slack_settings
 slack = Slacker(slack_settings.SLACK_API_TOKEN)
 
 
+def ssl_valid_time_remaining(hostname):
+    expires = ssl_expiry_datetime(hostname)
+    return expires - datetime.datetime.utcnow()
+
+
+def ssl_expires_in(hostname, buffer_days=7):
+    remaining = ssl_valid_time_remaining(hostname)
+    if remaining < datetime.timedelta(days=0):
+        raise AlreadyExpired("Cert expired %s days ago" % remaining.days)
+    elif remaining < datetime.timedelta(days=buffer_days):
+        return True
+    else:
+        return False
+
+
 def ssl_expiry_datetime(hostname):
     ssl_date_fmt = r'%b %d %H:%M:%S %Y %Z'
     context = ssl.create_default_context()
@@ -24,4 +39,4 @@ def ssl_expiry_datetime(hostname):
 
 
 if __name__ == '__main__':
-    print(ssl_expiry_datetime('nnsnodnb.moe'))
+    print(ssl_expires_in('nnsnodnb.moe'))
