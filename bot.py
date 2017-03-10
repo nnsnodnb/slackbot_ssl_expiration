@@ -57,4 +57,4 @@ def post_slack(hostname):
 
 if __name__ == '__main__':
     post_slack('nnsnodnb.moe')
-    ssl_expires_in('nnsnodnb.moe')
+
