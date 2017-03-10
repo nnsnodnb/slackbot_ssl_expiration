@@ -128,4 +128,6 @@ ENV/
 pyvenv.cfg
 pip-selfcheck.json
 
-# End of https://www.gitignore.io/api/python,virtualenv,osx
+### Other file
+# For slack api token
+slack_settings.py
