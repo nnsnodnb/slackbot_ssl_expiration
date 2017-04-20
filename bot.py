@@ -39,22 +39,20 @@ def ssl_expiry_datetime(hostname):
 
 
 def post_slack(hostname):
+    message = '@channel https://' + hostname + ' '
     if ssl_expires_in(hostname):
-        slack.chat.post_message(
-                '#expiration',
-                '@channel もうそろそろやばい',
-                as_user=True,
-                link_names=True
-        )
+        message += 'そろそろヤバイ'
     else:
-        slack.chat.post_message(
-                '#expiration',
-                '@channel まだ期限内',
-                as_user=True,
-                link_names=True
-        )
+        message += 'はまだ期限内' 
 
+    slack.chat.post_message(
+            '#expiration',
+            message,
+            as_user=True,
+            link_names=True
+    )
 
 if __name__ == '__main__':
     post_slack('nnsnodnb.moe')
+    post_slack('twidule.nnsnodnb.moe')
 
